@@ -112,11 +112,13 @@ const server = http.createServer((req, res) => {
       res.end("Invalid signature");
       return;
     }
+    console.log("Webhook signature OK");
 
     try {
       const payload = JSON.parse(rawBody.toString("utf8"));
       const supabaseUserId = extractSupabaseUserId(payload);
       if (supabaseUserId) {
+        console.log("Using supabase_user_id attribute:", supabaseUserId);
         await upsertOrder(payload, supabaseUserId);
         res.writeHead(200);
         res.end("OK");
@@ -128,8 +130,10 @@ const server = http.createServer((req, res) => {
         payload?.contact_email ||
         payload?.billing_address?.email ||
         null;
+      console.log("No supabase_user_id attribute. Falling back to email:", email);
       const user = await findUserByEmail(email);
       if (!user) {
+        console.warn("No matching Supabase user for email:", email);
         res.writeHead(202);
         res.end("No matching user");
         return;
