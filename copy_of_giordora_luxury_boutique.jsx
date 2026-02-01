@@ -1165,6 +1165,7 @@ export default function GiordoraLuxuryBoutique() {
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [ordersError, setOrdersError] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [profileForm, setProfileForm] = useState({
     full_name: "",
     phone: "",
@@ -1424,6 +1425,26 @@ export default function GiordoraLuxuryBoutique() {
     } finally {
       setProfileLoading(false);
     }
+  };
+
+  const normalizeOrderItems = (order) => {
+    if (!order) return [];
+    if (Array.isArray(order.items)) return order.items;
+    if (typeof order.items === "string") {
+      try {
+        const parsed = JSON.parse(order.items);
+        if (Array.isArray(parsed)) return parsed;
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  };
+
+  const getOrderTotals = (order) => {
+    const total = order?.total_amount ?? order?.total ?? 0;
+    const currency = order?.currency || "EUR";
+    return { total, currency };
   };
 
   const heroSlides = [
@@ -1970,26 +1991,20 @@ export default function GiordoraLuxuryBoutique() {
               {!ordersLoading && !ordersError && orders.length > 0 && (
                 <div className="giordora-account-order-grid">
                   {orders.map((order) => {
-                    let items = [];
-                    if (Array.isArray(order.items)) {
-                      items = order.items;
-                    } else if (typeof order.items === "string") {
-                      try {
-                        const parsed = JSON.parse(order.items);
-                        if (Array.isArray(parsed)) items = parsed;
-                      } catch {
-                        items = [];
-                      }
-                    }
-                    const orderTotal = order.total_amount ?? order.total ?? 0;
-                    const orderCurrency = order.currency || "EUR";
+                    const items = normalizeOrderItems(order);
+                    const { total: orderTotal, currency: orderCurrency } = getOrderTotals(order);
                     const orderDate = order.created_at ? new Date(order.created_at) : null;
                     const orderNumber = order.order_number || order.reference || order.id;
                     const orderNumberLabel = order.order_number
                       ? order.order_number
                       : String(orderNumber).slice(-6);
                     return (
-                      <div key={order.id} className="giordora-account-order-card">
+                      <button
+                        key={order.id}
+                        className="giordora-account-order-card giordora-account-order-card--clickable"
+                        type="button"
+                        onClick={() => setSelectedOrder(order)}
+                      >
                         <div className="giordora-account-order-top">
                           <div>
                             <div className="giordora-account-order-number">
@@ -2014,7 +2029,7 @@ export default function GiordoraLuxuryBoutique() {
                             ))}
                           </div>
                         )}
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
@@ -2023,6 +2038,70 @@ export default function GiordoraLuxuryBoutique() {
           </div>
         )}
       </section>
+      {selectedOrder && (
+        <div className="giordora-order-overlay" onClick={() => setSelectedOrder(null)}>
+          <div className="giordora-order-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="giordora-account-header">
+              <div>
+                <div className="giordora-account-title">{t("account_order_number")}</div>
+                <div className="giordora-account-subtitle">
+                  #{selectedOrder.order_number || selectedOrder.reference || selectedOrder.id}
+                </div>
+              </div>
+              <button className="giordora-mini-cart-close" onClick={() => setSelectedOrder(null)}>
+                X
+              </button>
+            </div>
+            <div className="giordora-order-detail-grid">
+              <div>
+                <div className="giordora-account-section-title">{t("account_status")}</div>
+                <div className="giordora-order-status">
+                  {selectedOrder.status || "Processing"}
+                </div>
+              </div>
+              <div>
+                <div className="giordora-account-section-title">{t("account_date")}</div>
+                <div className="giordora-account-muted">
+                  {selectedOrder.created_at
+                    ? new Date(selectedOrder.created_at).toLocaleString(locale || "fr-FR")
+                    : "-"}
+                </div>
+              </div>
+              <div>
+                <div className="giordora-account-section-title">{t("account_total")}</div>
+                <div className="giordora-account-muted">
+                  {(() => {
+                    const totals = getOrderTotals(selectedOrder);
+                    return formatPrice(totals.total, locale, totals.currency);
+                  })()}
+                </div>
+              </div>
+            </div>
+            <div className="giordora-account-section-title">{t("account_orders")}</div>
+            <div className="giordora-order-detail-items">
+              {normalizeOrderItems(selectedOrder).length === 0 && (
+                <div className="giordora-account-muted">{t("account_no_orders")}</div>
+              )}
+              {normalizeOrderItems(selectedOrder).map((item, idx) => (
+                <div key={`detail-${idx}`} className="giordora-order-detail-item">
+                  <div>
+                    <div className="giordora-account-order-number">
+                      {item.name || item.title || "Item"}
+                    </div>
+                    {item.sku && <div className="giordora-account-muted">SKU: {item.sku}</div>}
+                  </div>
+                  <div className="giordora-order-detail-meta">
+                    {item.quantity ? <span>x{item.quantity}</span> : null}
+                    {item.price ? (
+                      <strong>{formatPrice(Number(item.price), locale, selectedOrder.currency || "EUR")}</strong>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 
@@ -3468,6 +3547,16 @@ export default function GiordoraLuxuryBoutique() {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            text-align: left;
+            width: 100%;
+          }
+          .giordora-account-order-card--clickable {
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+          }
+          .giordora-account-order-card--clickable:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px rgba(0,0,0,0.12);
           }
           .giordora-account-order-top {
             display: flex;
@@ -3507,6 +3596,58 @@ export default function GiordoraLuxuryBoutique() {
             gap: 6px;
             border-top: 1px solid #ece2d0;
             padding-top: 8px;
+            font-size: 13px;
+            color: #4f4f4f;
+          }
+          .giordora-order-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+          }
+          .giordora-order-modal {
+            width: 720px;
+            max-width: 92vw;
+            background: #f9f6f2;
+            border: 1px solid #e2d7c3;
+            border-radius: 18px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+          }
+          .giordora-order-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            background: #fff;
+            border: 1px solid #e2d7c3;
+            border-radius: 14px;
+            padding: 12px;
+          }
+          .giordora-order-detail-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .giordora-order-detail-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            background: #fff;
+            border: 1px solid #e2d7c3;
+            border-radius: 12px;
+            padding: 10px 12px;
+          }
+          .giordora-order-detail-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
             font-size: 13px;
             color: #4f4f4f;
           }
@@ -3930,6 +4071,15 @@ export default function GiordoraLuxuryBoutique() {
             }
 
             .giordora-account-form-row {
+              grid-template-columns: minmax(0, 1fr);
+            }
+
+            .giordora-order-modal {
+              width: 100%;
+              max-width: 100%;
+            }
+
+            .giordora-order-detail-grid {
               grid-template-columns: minmax(0, 1fr);
             }
           }
