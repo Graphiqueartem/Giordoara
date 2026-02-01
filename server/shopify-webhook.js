@@ -1,6 +1,12 @@
 import http from "http";
 import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
+import { config as loadEnv } from "dotenv";
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+loadEnv({ path: resolve(__dirname, ".env") });
 
 const {
   PORT = "8787",
@@ -80,6 +86,14 @@ const upsertOrder = async (payload, userId) => {
 };
 
 const server = http.createServer((req, res) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+
+  if (req.method === "GET" && req.url === "/health") {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("OK");
+    return;
+  }
+
   if (req.method !== "POST" || req.url !== "/webhooks/shopify") {
     res.writeHead(404);
     res.end("Not found");
@@ -93,6 +107,7 @@ const server = http.createServer((req, res) => {
     const hmac = req.headers["x-shopify-hmac-sha256"];
 
     if (!verifyWebhook(hmac, rawBody)) {
+      console.warn("Invalid Shopify webhook signature");
       res.writeHead(401);
       res.end("Invalid signature");
       return;
