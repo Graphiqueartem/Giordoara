@@ -114,6 +114,19 @@ const TRANSLATIONS = {
     account_no_orders: "Aucune commande pour l'instant.",
     account_login_prompt: "Connectez-vous pour voir vos commandes.",
     account_profile: "Profil",
+    account_profile_details: "Informations personnelles",
+    account_profile_saved: "Profil mis à jour.",
+    account_profile_error: "Impossible de mettre à jour le profil.",
+    account_edit_profile: "Modifier le profil",
+    account_save: "Enregistrer",
+    account_saving: "Enregistrement...",
+    account_full_name: "Nom complet",
+    account_phone: "Téléphone",
+    account_address1: "Adresse",
+    account_address2: "Complément d'adresse",
+    account_city: "Ville",
+    account_postal: "Code postal",
+    account_country: "Pays",
     account_order_number: "Commande",
     account_status: "Statut",
     account_total: "Total",
@@ -232,6 +245,19 @@ const TRANSLATIONS = {
     account_no_orders: "No orders yet.",
     account_login_prompt: "Log in to view your orders.",
     account_profile: "Profile",
+    account_profile_details: "Personal details",
+    account_profile_saved: "Profile updated.",
+    account_profile_error: "Unable to update profile.",
+    account_edit_profile: "Edit profile",
+    account_save: "Save changes",
+    account_saving: "Saving...",
+    account_full_name: "Full name",
+    account_phone: "Phone",
+    account_address1: "Address",
+    account_address2: "Address line 2",
+    account_city: "City",
+    account_postal: "Postal code",
+    account_country: "Country",
     account_order_number: "Order",
     account_status: "Status",
     account_total: "Total",
@@ -350,6 +376,19 @@ const TRANSLATIONS = {
     account_no_orders: "Nessun ordine per ora.",
     account_login_prompt: "Accedi per vedere i tuoi ordini.",
     account_profile: "Profilo",
+    account_profile_details: "Dettagli personali",
+    account_profile_saved: "Profilo aggiornato.",
+    account_profile_error: "Impossibile aggiornare il profilo.",
+    account_edit_profile: "Modifica profilo",
+    account_save: "Salva",
+    account_saving: "Salvataggio...",
+    account_full_name: "Nome completo",
+    account_phone: "Telefono",
+    account_address1: "Indirizzo",
+    account_address2: "Indirizzo (riga 2)",
+    account_city: "Città",
+    account_postal: "CAP",
+    account_country: "Paese",
     account_order_number: "Ordine",
     account_status: "Stato",
     account_total: "Totale",
@@ -465,6 +504,19 @@ const TRANSLATIONS = {
     account_no_orders: "Aún no hay pedidos.",
     account_login_prompt: "Inicia sesión para ver tus pedidos.",
     account_profile: "Perfil",
+    account_profile_details: "Datos personales",
+    account_profile_saved: "Perfil actualizado.",
+    account_profile_error: "No se pudo actualizar el perfil.",
+    account_edit_profile: "Editar perfil",
+    account_save: "Guardar",
+    account_saving: "Guardando...",
+    account_full_name: "Nombre completo",
+    account_phone: "Teléfono",
+    account_address1: "Dirección",
+    account_address2: "Dirección (línea 2)",
+    account_city: "Ciudad",
+    account_postal: "Código postal",
+    account_country: "País",
     account_order_number: "Pedido",
     account_status: "Estado",
     account_total: "Total",
@@ -1110,10 +1162,21 @@ export default function GiordoraLuxuryBoutique() {
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const [authNotice, setAuthNotice] = useState("");
-  const [accountOpen, setAccountOpen] = useState(false);
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [ordersError, setOrdersError] = useState("");
+  const [profileForm, setProfileForm] = useState({
+    full_name: "",
+    phone: "",
+    address_line1: "",
+    address_line2: "",
+    city: "",
+    postal_code: "",
+    country: "",
+  });
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileNotice, setProfileNotice] = useState("");
+  const [profileError, setProfileError] = useState("");
   const [page, setPage] = useState("home");
   const [cartItems, setCartItems] = useState([]);
   const [localReviews, setLocalReviews] = useState(() => {
@@ -1181,6 +1244,31 @@ export default function GiordoraLuxuryBoutique() {
   }, [supabaseEnabled]);
 
   useEffect(() => {
+    if (!authUser) {
+      setProfileForm({
+        full_name: "",
+        phone: "",
+        address_line1: "",
+        address_line2: "",
+        city: "",
+        postal_code: "",
+        country: "",
+      });
+      return;
+    }
+    const meta = authUser.user_metadata || {};
+    setProfileForm({
+      full_name: meta.full_name || "",
+      phone: meta.phone || "",
+      address_line1: meta.address_line1 || "",
+      address_line2: meta.address_line2 || "",
+      city: meta.city || "",
+      postal_code: meta.postal_code || "",
+      country: meta.country || "",
+    });
+  }, [authUser]);
+
+  useEffect(() => {
     if (!supabaseEnabled || !authUser) {
       setOrders([]);
       return;
@@ -1230,7 +1318,6 @@ export default function GiordoraLuxuryBoutique() {
   const openAuthModal = (mode) => {
     setAuthMode(mode);
     setAuthOpen(true);
-    setAccountOpen(false);
     setAuthError("");
     setAuthNotice("");
   };
@@ -1262,7 +1349,7 @@ export default function GiordoraLuxuryBoutique() {
         if (error) throw error;
         setAuthNotice(t("auth_notice_welcome"));
         setAuthOpen(false);
-        setAccountOpen(true);
+        setPage("account");
       } else {
         const { data, error } = await supabase.auth.signUp({
           email,
@@ -1275,7 +1362,7 @@ export default function GiordoraLuxuryBoutique() {
         if (data?.session) {
           setAuthNotice(t("auth_notice_welcome"));
           setAuthOpen(false);
-          setAccountOpen(true);
+          setPage("account");
         } else {
           setAuthNotice(t("auth_notice_check_email"));
         }
@@ -1295,11 +1382,47 @@ export default function GiordoraLuxuryBoutique() {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       setAuthUser(null);
-      setAccountOpen(false);
+      if (page === "account") {
+        setPage("home");
+      }
     } catch (error) {
       setAuthError(error?.message || "Unable to sign out.");
     } finally {
       setAuthLoading(false);
+    }
+  };
+
+  const handleProfileSave = async (event) => {
+    event.preventDefault();
+    setProfileError("");
+    setProfileNotice("");
+    if (!supabaseEnabled || !supabase) {
+      setProfileError(t("auth_error_no_supabase"));
+      return;
+    }
+    if (!authUser) {
+      setProfileError(t("account_login_prompt"));
+      return;
+    }
+    setProfileLoading(true);
+    try {
+      const { error } = await supabase.auth.updateUser({
+        data: {
+          full_name: profileForm.full_name?.trim() || "",
+          phone: profileForm.phone?.trim() || "",
+          address_line1: profileForm.address_line1?.trim() || "",
+          address_line2: profileForm.address_line2?.trim() || "",
+          city: profileForm.city?.trim() || "",
+          postal_code: profileForm.postal_code?.trim() || "",
+          country: profileForm.country?.trim() || "",
+        },
+      });
+      if (error) throw error;
+      setProfileNotice(t("account_profile_saved"));
+    } catch (error) {
+      setProfileError(error?.message || t("account_profile_error"));
+    } finally {
+      setProfileLoading(false);
     }
   };
 
@@ -1702,6 +1825,203 @@ export default function GiordoraLuxuryBoutique() {
         )}
         {shopifyError && <div className="giordora-error">{shopifyError}</div>}
         {renderProductGrid(filteredProducts)}
+      </section>
+    </main>
+  );
+
+  const renderAccountPage = () => (
+    <main className="giordora-account-page">
+      <section className="giordora-section">
+        <div className="giordora-section-header">
+          <div>
+            <div className="giordora-section-title">{t("account_title")}</div>
+            <div className="giordora-section-subtitle">{t("account_subtitle")}</div>
+          </div>
+          <div className="giordora-shop-toolbar">
+            <button className="giordora-btn-outline" onClick={() => handleNavigate("home")}>
+              ← {t("nav_home")}
+            </button>
+          </div>
+        </div>
+
+        {!supabaseEnabled && (
+          <div className="giordora-auth-status giordora-auth-status--error">
+            {t("auth_error_no_supabase")}
+          </div>
+        )}
+
+        {supabaseEnabled && !authUser && (
+          <div className="giordora-account-card">
+            <p>{t("account_login_prompt")}</p>
+            <div className="giordora-account-actions">
+              <button className="giordora-btn-ghost" onClick={() => openAuthModal("login")}>
+                {t("auth_login")}
+              </button>
+              <button className="giordora-btn-gold" onClick={() => openAuthModal("signup")}>
+                {t("auth_signup")}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {supabaseEnabled && authUser && (
+          <div className="giordora-account-grid">
+            <div className="giordora-account-card">
+              <div className="giordora-account-section-title">{t("account_profile_details")}</div>
+              <div className="giordora-account-profile">
+                <div className="giordora-account-avatar">{userInitials}</div>
+                <div className="giordora-account-profile-details">
+                  <div className="giordora-account-name">{userDisplayName || t("account_profile")}</div>
+                  <div className="giordora-account-email">{authUser.email}</div>
+                </div>
+                <button className="giordora-btn-outline" onClick={handleSignOut} disabled={authLoading}>
+                  {authLoading ? t("auth_loading") : t("auth_logout")}
+                </button>
+              </div>
+
+              <form className="giordora-account-form" onSubmit={handleProfileSave}>
+                <label>
+                  {t("account_full_name")}
+                  <input
+                    type="text"
+                    value={profileForm.full_name}
+                    onChange={(e) => setProfileForm((prev) => ({ ...prev, full_name: e.target.value }))}
+                    placeholder={t("auth_placeholder_name")}
+                  />
+                </label>
+                <label>
+                  {t("account_phone")}
+                  <input
+                    type="tel"
+                    value={profileForm.phone}
+                    onChange={(e) => setProfileForm((prev) => ({ ...prev, phone: e.target.value }))}
+                    placeholder="+33 6 12 34 56 78"
+                  />
+                </label>
+                <label>
+                  {t("account_address1")}
+                  <input
+                    type="text"
+                    value={profileForm.address_line1}
+                    onChange={(e) =>
+                      setProfileForm((prev) => ({ ...prev, address_line1: e.target.value }))
+                    }
+                  />
+                </label>
+                <label>
+                  {t("account_address2")}
+                  <input
+                    type="text"
+                    value={profileForm.address_line2}
+                    onChange={(e) =>
+                      setProfileForm((prev) => ({ ...prev, address_line2: e.target.value }))
+                    }
+                  />
+                </label>
+                <div className="giordora-account-form-row">
+                  <label>
+                    {t("account_city")}
+                    <input
+                      type="text"
+                      value={profileForm.city}
+                      onChange={(e) => setProfileForm((prev) => ({ ...prev, city: e.target.value }))}
+                    />
+                  </label>
+                  <label>
+                    {t("account_postal")}
+                    <input
+                      type="text"
+                      value={profileForm.postal_code}
+                      onChange={(e) =>
+                        setProfileForm((prev) => ({ ...prev, postal_code: e.target.value }))
+                      }
+                    />
+                  </label>
+                </div>
+                <label>
+                  {t("account_country")}
+                  <input
+                    type="text"
+                    value={profileForm.country}
+                    onChange={(e) => setProfileForm((prev) => ({ ...prev, country: e.target.value }))}
+                  />
+                </label>
+                {profileError && (
+                  <div className="giordora-auth-status giordora-auth-status--error">{profileError}</div>
+                )}
+                {profileNotice && <div className="giordora-auth-status">{profileNotice}</div>}
+                <div className="giordora-account-form-actions">
+                  <button className="giordora-btn-gold" type="submit" disabled={profileLoading}>
+                    {profileLoading ? t("account_saving") : t("account_save")}
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div className="giordora-account-card">
+              <div className="giordora-account-section-title">{t("account_orders")}</div>
+              {ordersLoading && <div className="giordora-account-muted">{t("auth_loading")}</div>}
+              {ordersError && (
+                <div className="giordora-auth-status giordora-auth-status--error">{ordersError}</div>
+              )}
+              {!ordersLoading && !ordersError && orders.length === 0 && (
+                <div className="giordora-account-muted">{t("account_no_orders")}</div>
+              )}
+              {!ordersLoading && !ordersError && orders.length > 0 && (
+                <div className="giordora-account-order-grid">
+                  {orders.map((order) => {
+                    let items = [];
+                    if (Array.isArray(order.items)) {
+                      items = order.items;
+                    } else if (typeof order.items === "string") {
+                      try {
+                        const parsed = JSON.parse(order.items);
+                        if (Array.isArray(parsed)) items = parsed;
+                      } catch {
+                        items = [];
+                      }
+                    }
+                    const orderTotal = order.total_amount ?? order.total ?? 0;
+                    const orderCurrency = order.currency || "EUR";
+                    const orderDate = order.created_at ? new Date(order.created_at) : null;
+                    const orderNumber = order.order_number || order.reference || order.id;
+                    const orderNumberLabel = order.order_number
+                      ? order.order_number
+                      : String(orderNumber).slice(-6);
+                    return (
+                      <div key={order.id} className="giordora-account-order-card">
+                        <div className="giordora-account-order-top">
+                          <div>
+                            <div className="giordora-account-order-number">
+                              {t("account_order_number")} #{orderNumberLabel}
+                            </div>
+                            <div className="giordora-account-order-date">
+                              {orderDate ? orderDate.toLocaleDateString(locale || "fr-FR") : "-"}
+                            </div>
+                          </div>
+                          <div className="giordora-account-order-meta">
+                            <span className="giordora-order-status">{order.status || "Processing"}</span>
+                            <strong>{formatPrice(orderTotal, locale, orderCurrency)}</strong>
+                          </div>
+                        </div>
+                        {items.length > 0 && (
+                          <div className="giordora-account-order-items">
+                            {items.slice(0, 4).map((item, idx) => (
+                              <div key={`${order.id}-item-${idx}`} className="giordora-account-order-item">
+                                <span>{item.name || item.title || "Item"}</span>
+                                {item.quantity ? <span>x{item.quantity}</span> : null}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </section>
     </main>
   );
@@ -3007,6 +3327,25 @@ export default function GiordoraLuxuryBoutique() {
             justify-content: center;
             z-index: 50;
           }
+          .giordora-account-page {
+            padding: 24px 0 60px;
+          }
+          .giordora-account-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+            gap: 18px;
+            margin-top: 16px;
+          }
+          .giordora-account-card {
+            background: rgba(255,255,255,0.96);
+            border: 1px solid #e2d7c3;
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+          }
           .giordora-account-modal {
             width: 680px;
             max-width: 94vw;
@@ -3080,6 +3419,34 @@ export default function GiordoraLuxuryBoutique() {
             display: flex;
             flex-direction: column;
             gap: 10px;
+          }
+          .giordora-account-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .giordora-account-form label {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 12px;
+            color: #5a4b33;
+          }
+          .giordora-account-form input {
+            border-radius: 10px;
+            border: 1px solid #e2d7c3;
+            padding: 10px 12px;
+            background: #fff;
+            font-family: inherit;
+          }
+          .giordora-account-form-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 10px;
+          }
+          .giordora-account-form-actions {
+            display: flex;
+            justify-content: flex-end;
           }
           .giordora-account-section-title {
             font-size: 12px;
@@ -3507,6 +3874,10 @@ export default function GiordoraLuxuryBoutique() {
             .giordora-product-hero {
               grid-template-columns: minmax(0, 1fr);
             }
+
+            .giordora-account-grid {
+              grid-template-columns: minmax(0, 1fr);
+            }
           }
 
           @media (max-width: 640px) {
@@ -3556,6 +3927,10 @@ export default function GiordoraLuxuryBoutique() {
 
             .giordora-account-order-meta {
               align-items: flex-start;
+            }
+
+            .giordora-account-form-row {
+              grid-template-columns: minmax(0, 1fr);
             }
           }
           @media (max-width: 480px) {
@@ -3637,7 +4012,7 @@ export default function GiordoraLuxuryBoutique() {
               <div className="giordora-auth-buttons">
                 {authUser ? (
                   <>
-                    <button className="giordora-btn-ghost" onClick={() => setAccountOpen(true)}>
+                    <button className="giordora-btn-ghost" onClick={() => handleNavigate("account")}>
                       {t("auth_account")}
                     </button>
                     <button className="giordora-btn-gold" onClick={handleSignOut} disabled={authLoading}>
@@ -3681,7 +4056,7 @@ export default function GiordoraLuxuryBoutique() {
               <div className="giordora-auth-buttons">
                 {authUser ? (
                   <>
-                    <button className="giordora-btn-ghost" onClick={() => setAccountOpen(true)}>
+                    <button className="giordora-btn-ghost" onClick={() => handleNavigate("account")}>
                       {t("auth_account")}
                     </button>
                     <button className="giordora-btn-gold" onClick={handleSignOut} disabled={authLoading}>
@@ -3776,6 +4151,8 @@ export default function GiordoraLuxuryBoutique() {
           </main>
         ) : page === "shop" ? (
           renderShopPage()
+        ) : page === "account" ? (
+          renderAccountPage()
         ) : (
           <main>
           <section id="home" className="giordora-hero">
@@ -4146,121 +4523,6 @@ export default function GiordoraLuxuryBoutique() {
         </div>
       )}
 
-      {accountOpen && (
-        <div className="giordora-account-overlay" onClick={() => setAccountOpen(false)}>
-          <div className="giordora-account-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="giordora-account-header">
-              <div>
-                <div className="giordora-account-title">{t("account_title")}</div>
-                <div className="giordora-account-subtitle">{t("account_subtitle")}</div>
-              </div>
-              <button className="giordora-mini-cart-close" onClick={() => setAccountOpen(false)}>
-                X
-              </button>
-            </div>
-
-            {!supabaseEnabled && (
-              <div className="giordora-auth-status giordora-auth-status--error">
-                {t("auth_error_no_supabase")}
-              </div>
-            )}
-
-            {supabaseEnabled && !authUser && (
-              <div className="giordora-account-empty">
-                <p>{t("account_login_prompt")}</p>
-                <div className="giordora-account-actions">
-                  <button className="giordora-btn-ghost" onClick={() => openAuthModal("login")}>
-                    {t("auth_login")}
-                  </button>
-                  <button className="giordora-btn-gold" onClick={() => openAuthModal("signup")}>
-                    {t("auth_signup")}
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {supabaseEnabled && authUser && (
-              <div className="giordora-account-body">
-                <div className="giordora-account-profile">
-                  <div className="giordora-account-avatar">{userInitials}</div>
-                  <div className="giordora-account-profile-details">
-                    <div className="giordora-account-name">{userDisplayName || t("account_profile")}</div>
-                    <div className="giordora-account-email">{authUser.email}</div>
-                  </div>
-                  <button className="giordora-btn-outline" onClick={handleSignOut} disabled={authLoading}>
-                    {authLoading ? t("auth_loading") : t("auth_logout")}
-                  </button>
-                </div>
-
-                <div className="giordora-account-orders">
-                  <div className="giordora-account-section-title">{t("account_orders")}</div>
-                  {ordersLoading && <div className="giordora-account-muted">{t("auth_loading")}</div>}
-                  {ordersError && (
-                    <div className="giordora-auth-status giordora-auth-status--error">
-                      {ordersError}
-                    </div>
-                  )}
-                  {!ordersLoading && !ordersError && orders.length === 0 && (
-                    <div className="giordora-account-muted">{t("account_no_orders")}</div>
-                  )}
-                  {!ordersLoading && !ordersError && orders.length > 0 && (
-                    <div className="giordora-account-order-grid">
-                      {orders.map((order) => {
-                        let items = [];
-                        if (Array.isArray(order.items)) {
-                          items = order.items;
-                        } else if (typeof order.items === "string") {
-                          try {
-                            const parsed = JSON.parse(order.items);
-                            if (Array.isArray(parsed)) items = parsed;
-                          } catch {
-                            items = [];
-                          }
-                        }
-                        const orderTotal = order.total_amount ?? order.total ?? 0;
-                        const orderCurrency = order.currency || "EUR";
-                        const orderDate = order.created_at ? new Date(order.created_at) : null;
-                        const orderNumber = order.order_number || order.reference || order.id;
-                        const orderNumberLabel = order.order_number
-                          ? order.order_number
-                          : String(orderNumber).slice(-6);
-                        return (
-                          <div key={order.id} className="giordora-account-order-card">
-                            <div className="giordora-account-order-top">
-                              <div>
-                                <div className="giordora-account-order-number">
-                                  {t("account_order_number")} #{orderNumberLabel}
-                                </div>
-                                <div className="giordora-account-order-date">
-                                  {orderDate ? orderDate.toLocaleDateString(locale || "fr-FR") : "-"}
-                                </div>
-                              </div>
-                              <div className="giordora-account-order-meta">
-                                <span className="giordora-order-status">{order.status || "Processing"}</span>
-                                <strong>{formatPrice(orderTotal, locale, orderCurrency)}</strong>
-                              </div>
-                            </div>
-                            {items.length > 0 && (
-                              <div className="giordora-account-order-items">
-                                {items.slice(0, 3).map((item, idx) => (
-                                  <div key={`${order.id}-item-${idx}`} className="giordora-account-order-item">
-                                    <span>{item.name || item.title || "Item"}</span>
-                                    {item.quantity ? <span>x{item.quantity}</span> : null}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
     </div>
   );
