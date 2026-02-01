@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: giordora-shopify-webhook
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server/shopify-webhook.js
+    envVars:
+      - key: PORT
+        value: 8787
+      - key: SHOPIFY_WEBHOOK_SECRET
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false

@@ -1,0 +1,1033 @@
+
+          :root {
+            --color-black: #0C0C0C;
+            --color-gold: #C9A75C;
+            --color-sage: #A9B8A1;
+            --color-ivory: #F9F6F2;
+          }
+          * {
+            box-sizing: border-box;
+          }
+          body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--color-black);
+            color: var(--color-ivory);
+            overflow-x: hidden;
+          }
+          .giordora-root {
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #1a1a1a 0%, #050505 65%);
+            color: var(--color-ivory);
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+          }
+          .giordora-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px 72px;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+          }
+          header.giordora-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(201,167,92,0.35);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+            background: linear-gradient(to bottom, rgba(12,12,12,0.96), rgba(12,12,12,0.7), transparent);
+            width: 100%;
+            max-width: 100%;
+          }
+          .giordora-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+          }
+          .giordora-logo-title {
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: var(--color-ivory);
+          }
+          .giordora-logo-sub {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--color-gold);
+            letter-spacing: 0.2em;
+          }
+          nav.giordora-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+          }
+          .giordora-nav a {
+            color: rgba(249,246,242,0.8);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 4px;
+          }
+          .giordora-nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--color-gold), var(--color-sage));
+            transition: width 0.25s ease;
+          }
+          .giordora-nav a:hover::after {
+            width: 100%;
+          }
+          .giordora-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+
+          .giordora-controls--mobile {
+            display: none;
+          }
+
+          /* Burger default (hidden on desktop) */
+          .giordora-burger {
+            display: none;
+          }
+
+          .giordora-burger-lines {
+            width: 16px;
+            height: 12px;
+            position: relative;
+          }
+
+          .giordora-burger-lines span {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--color-gold);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+          }
+
+          .giordora-burger-lines span:first-child {
+            top: 3px;
+          }
+
+          .giordora-burger-lines span:last-child {
+            bottom: 3px;
+          }
+
+          .giordora-burger--open .giordora-burger-lines span:first-child {
+            transform: translateY(3px) rotate(45deg);
+          }
+
+          .giordora-burger--open .giordora-burger-lines span:last-child {
+            transform: translateY(-3px) rotate(-45deg);
+          }
+
+          .giordora-language-select {
+            background: transparent;
+            border: 1px solid rgba(201,167,92,0.6);
+            color: var(--color-ivory);
+            padding: 4px 10px;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            border-radius: 999px;
+          }
+          .giordora-language-select:focus {
+            outline: none;
+            border-color: var(--color-gold);
+          }
+          .giordora-auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+          .giordora-btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(249,246,242,0.18);
+            color: var(--color-ivory);
+            padding: 6px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            border-radius: 999px;
+            cursor: pointer;
+          }
+          .giordora-btn-ghost:hover {
+            border-color: var(--color-gold);
+          }
+          .giordora-btn-gold {
+            background: linear-gradient(135deg, var(--color-gold), #e4c97a);
+            color: var(--color-black);
+            border: none;
+            padding: 6px 14px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            border-radius: 999px;
+            cursor: pointer;
+          }
+          .giordora-btn-gold:hover {
+            filter: brightness(1.05);
+          }
+          .giordora-cart-button {
+            position: relative;
+            border-radius: 999px;
+            border: 1px solid rgba(201,167,92,0.8);
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.4);
+          }
+          .giordora-cart-count {
+            min-width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            background: var(--color-gold);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+          }
+          .giordora-cart-icon {
+            width: 14px;
+            height: 14px;
+            border: 1px solid var(--color-gold);
+            border-radius: 3px;
+            position: relative;
+          }
+          .giordora-cart-icon::before {
+            content: "";
+            position: absolute;
+            width: 9px;
+            height: 5px;
+            border-radius: 999px;
+            border: 1px solid var(--color-gold);
+            border-bottom: none;
+            top: -6px;
+            left: 1.5px;
+          }
+          /* Hero */
+          .giordora-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+            gap: 48px;
+            padding: 40px 0 56px;
+          }
+          .giordora-hero-title {
+            font-size: 36px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+          }
+          .giordora-hero-subtitle {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(249,246,242,0.82);
+            max-width: 480px;
+            margin-bottom: 24px;
+          }
+          .giordora-hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+          }
+          .giordora-badge {
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(249,246,242,0.25);
+            color: rgba(249,246,242,0.8);
+          }
+          .giordora-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+          }
+          .giordora-hero-visual {
+            position: relative;
+            border-radius: 32px;
+            background: radial-gradient(circle at 20% 0%, rgba(201,167,92,0.4), transparent 55%), #111;
+            padding: 20px 20px 24px;
+            border: 1px solid rgba(201,167,92,0.4);
+            box-shadow: 0 22px 60px rgba(0,0,0,0.75);
+          }
+          .giordora-hero-visual-inner {
+            border-radius: 24px;
+            background: linear-gradient(145deg, #151515, #222);
+            padding: 16px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 12px;
+            align-items: center;
+          }
+          .giordora-hero-card {
+            border-radius: 18px;
+            background: radial-gradient(circle at top, rgba(249,246,242,0.08), rgba(0,0,0,0.9));
+            padding: 16px;
+            border: 1px solid rgba(249,246,242,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .giordora-hero-card h3 {
+            font-size: 13px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin: 0 0 4px;
+          }
+          .giordora-hero-card p {
+            font-size: 12px;
+            color: rgba(249,246,242,0.75);
+            line-height: 1.6;
+            margin: 0 0 10px;
+          }
+          .giordora-hero-pill {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-gold);
+          }
+          .giordora-hero-price {
+            font-size: 13px;
+            margin-top: 4px;
+          }
+          .giordora-hero-mini {
+            border-radius: 16px;
+            padding: 12px;
+            border: 1px dashed rgba(201,167,92,0.6);
+            font-size: 11px;
+            line-height: 1.6;
+            color: rgba(249,246,242,0.8);
+            margin-top: 14px;
+          }
+          .giordora-hero-mini strong {
+            color: var(--color-gold);
+          }
+          /* Filters */
+          .giordora-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+            align-items: center;
+          }
+          .giordora-search-input {
+            flex: 1;
+            min-width: 180px;
+            border-radius: 999px;
+            border: 1px solid rgba(249,246,242,0.2);
+            padding: 7px 12px;
+            background: #0b0b0b;
+            color: var(--color-ivory);
+            font-size: 12px;
+          }
+          .giordora-search-input::placeholder {
+            color: rgba(249,246,242,0.45);
+          }
+          .giordora-select-need {
+            border-radius: 999px;
+            border: 1px solid rgba(249,246,242,0.2);
+            background: #0b0b0b;
+            color: var(--color-ivory);
+            font-size: 11px;
+            padding: 7px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+          }
+          .giordora-filter-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: rgba(249,246,242,0.7);
+          }
+          /* Sections */
+          .giordora-section {
+            padding: 40px 0 28px;
+            border-top: 1px solid rgba(201,167,92,0.18);
+          }
+          .giordora-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 20px;
+          }
+          .giordora-section-title {
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 13px;
+          }
+          .giordora-section-subtitle {
+            font-size: 13px;
+            color: rgba(249,246,242,0.8);
+            max-width: 440px;
+          }
+          /* Shop */
+          .giordora-shop {
+            background: linear-gradient(180deg, rgba(201,167,92,0.06), rgba(12,12,12,0));
+            border-radius: 20px;
+            padding: 40px 18px 32px;
+            border: 1px solid rgba(201,167,92,0.18);
+          }
+          .giordora-shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+          }
+          .giordora-shop-card {
+            background: radial-gradient(circle at top, rgba(169,184,161,0.14), rgba(12,12,12,0.96));
+            border: 1px solid rgba(249,246,242,0.12);
+            border-radius: 18px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 100%;
+          }
+          .giordora-shop-image {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(201,167,92,0.25);
+          }
+          .giordora-shop-image img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+          }
+          .giordora-stock-pill {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            border: 1px solid rgba(249,246,242,0.25);
+            background: rgba(0,0,0,0.6);
+          }
+          .giordora-stock-pill--in {
+            color: var(--color-sage);
+            border-color: rgba(169,184,161,0.8);
+          }
+          .giordora-stock-pill--out {
+            color: #ffb3a6;
+            border-color: rgba(255,99,71,0.7);
+          }
+          .giordora-shop-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .giordora-shop-name {
+            font-size: 13px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+          }
+          .giordora-shop-price {
+            font-size: 14px;
+            color: var(--color-gold);
+          }
+          .giordora-shop-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+          }
+
+          /* Products grid */
+          .giordora-products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+          }
+          .giordora-product-card {
+            border-radius: 22px;
+            padding: 18px 18px 14px;
+            border: 1px solid rgba(249,246,242,0.12);
+            background: radial-gradient(circle at top, rgba(169,184,161,0.12), rgba(12,12,12,0.96));
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+          .giordora-product-tagline {
+            font-size: 11px;
+            color: rgba(249,246,242,0.7);
+          }
+          .giordora-product-name {
+            font-size: 13px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+          }
+          .giordora-product-desc {
+            font-size: 12px;
+            color: rgba(249,246,242,0.78);
+            line-height: 1.7;
+          }
+          .giordora-product-meta {
+            font-size: 11px;
+            color: rgba(249,246,242,0.6);
+          }
+          .giordora-product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+          }
+          .giordora-product-price {
+            font-size: 13px;
+            color: var(--color-gold);
+          }
+          .giordora-product-actions {
+            display: flex;
+            gap: 8px;
+          }
+          .giordora-btn-outline {
+            background: transparent;
+            border-radius: 999px;
+            border: 1px solid rgba(249,246,242,0.25);
+            color: var(--color-ivory);
+            padding: 5px 9px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            cursor: pointer;
+          }
+          .giordora-btn-outline:hover {
+            border-color: var(--color-gold);
+          }
+          /* Routine steps */
+          .giordora-steps {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+          }
+          .giordora-step-card {
+            border-radius: 18px;
+            padding: 14px 14px 12px;
+            border: 1px solid rgba(249,246,242,0.16);
+            background: linear-gradient(135deg, rgba(15,15,15,0.95), rgba(20,20,20,0.95));
+            font-size: 12px;
+            color: rgba(249,246,242,0.82);
+          }
+          .giordora-step-card-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-bottom: 6px;
+            color: var(--color-gold);
+          }
+          /* Text blocks */
+          .giordora-text-block {
+            font-size: 13px;
+            line-height: 1.8;
+            color: rgba(249,246,242,0.8);
+            max-width: 620px;
+          }
+          .giordora-contact-card {
+            border-radius: 18px;
+            padding: 14px 16px;
+            border: 1px solid rgba(249,246,242,0.16);
+            background: radial-gradient(circle at top, rgba(201,167,92,0.2), rgba(12,12,12,0.96));
+            font-size: 13px;
+          }
+          .giordora-contact-email {
+            color: var(--color-gold);
+            text-decoration: none;
+          }
+          /* Newsletter */
+          .giordora-newsletter {
+            border-radius: 22px;
+            padding: 18px 18px 16px;
+            border: 1px solid rgba(201,167,92,0.4);
+            background: radial-gradient(circle at top, rgba(201,167,92,0.2), rgba(12,12,12,0.96));
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+            gap: 16px;
+            align-items: center;
+          }
+          .giordora-newsletter-title {
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 13px;
+            margin-bottom: 6px;
+          }
+          .giordora-newsletter-subtitle {
+            font-size: 13px;
+            color: rgba(249,246,242,0.85);
+          }
+          .giordora-newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+          .giordora-newsletter-input {
+            border-radius: 999px;
+            border: 1px solid rgba(249,246,242,0.2);
+            padding: 7px 12px;
+            background: #0b0b0b;
+            color: var(--color-ivory);
+            font-size: 12px;
+          }
+          .giordora-newsletter-input::placeholder {
+            color: rgba(249,246,242,0.5);
+          }
+          .giordora-newsletter-confirm {
+            font-size: 12px;
+            color: rgba(249,246,242,0.8);
+          }
+          /* Product page */
+          .giordora-product-page {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 24px 0 8px;
+            color: var(--color-ivory);
+          }
+          .giordora-product-page-header {
+            display: flex;
+            justify-content: flex-start;
+          }
+          .giordora-product-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 24px;
+            align-items: center;
+          }
+          .giordora-product-image img {
+            width: 100%;
+            border-radius: 18px;
+            border: 1px solid rgba(201,167,92,0.4);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+          }
+          .giordora-product-info h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+          }
+          .giordora-product-subtitle {
+            margin: 0 0 12px;
+            color: rgba(249,246,242,0.8);
+          }
+          .giordora-product-price-tag {
+            font-size: 20px;
+            color: var(--color-gold);
+            margin-bottom: 12px;
+          }
+          .giordora-product-stock {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(169,184,161,0.6);
+            color: var(--color-sage);
+            font-size: 12px;
+            margin-bottom: 10px;
+          }
+          .giordora-product-actions {
+            display: flex;
+            gap: 10px;
+          }
+          .giordora-product-section {
+            border-top: 1px solid rgba(201,167,92,0.18);
+            padding-top: 14px;
+          }
+          .giordora-product-section h2 {
+            margin: 0 0 8px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-size: 14px;
+          }
+          .giordora-product-section p,
+          .giordora-product-section ul {
+            margin: 0;
+            color: rgba(249,246,242,0.85);
+            line-height: 1.7;
+          }
+          .giordora-product-section ul {
+            padding-left: 18px;
+          }
+          .giordora-product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+          }
+          .giordora-product-tags span {
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(201,167,92,0.5);
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+          }
+          .giordora-product-review {
+            border: 1px solid rgba(249,246,242,0.12);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+          }
+          /* Footer */
+          footer.giordora-footer {
+            padding-top: 32px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(201,167,92,0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 11px;
+            color: rgba(249,246,242,0.7);
+          }
+          /* Mini cart overlay */
+          .giordora-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: flex-end;
+            z-index: 40;
+          }
+          .giordora-mini-cart {
+            width: 320px;
+            max-width: 100%;
+            background: #101010;
+            border-left: 1px solid rgba(201,167,92,0.4);
+            padding: 18px 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+          }
+          .giordora-error {
+            background: rgba(255,99,71,0.12);
+            border: 1px solid rgba(255,99,71,0.4);
+            color: #ffb3a6;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin: 4px 0;
+          }
+          .giordora-sync-note {
+            font-size: 12px;
+            color: rgba(169,184,161,0.9);
+            margin: 6px 0 12px;
+          }
+          .giordora-mini-cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .giordora-mini-cart-title {
+            font-size: 13px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+          }
+          .giordora-mini-cart-close {
+            background: transparent;
+            border: none;
+            color: rgba(249,246,242,0.7);
+            cursor: pointer;
+            font-size: 18px;
+          }
+          .giordora-mini-cart-items {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .giordora-mini-cart-item {
+            border-radius: 12px;
+            padding: 8px 10px;
+            border: 1px solid rgba(249,246,242,0.16);
+            font-size: 12px;
+          }
+          .giordora-mini-cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 4px;
+          }
+          .giordora-mini-cart-item-name {
+            max-width: 170px;
+          }
+          .giordora-mini-cart-qty {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+          }
+          .giordora-mini-cart-qty button {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(249,246,242,0.3);
+            background: transparent;
+            color: rgba(249,246,242,0.85);
+            cursor: pointer;
+          }
+          .giordora-mini-cart-remove {
+            border: none;
+            background: transparent;
+            color: rgba(249,246,242,0.65);
+            font-size: 11px;
+            cursor: pointer;
+          }
+          .giordora-mini-cart-footer {
+            border-top: 1px solid rgba(249,246,242,0.18);
+            padding-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+          .giordora-mini-cart-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+          }
+          /* Auth modal */
+          .giordora-auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+          }
+          .giordora-auth-modal {
+            width: 360px;
+            max-width: 90vw;
+            background: #101010;
+            border: 1px solid rgba(201,167,92,0.35);
+            border-radius: 16px;
+            padding: 16px 16px 14px;
+            color: var(--color-ivory);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .giordora-auth-modal h3 {
+            margin: 0 0 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-size: 13px;
+          }
+          .giordora-auth-modal form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .giordora-auth-modal label {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 12px;
+            color: rgba(249,246,242,0.8);
+          }
+          .giordora-auth-modal input {
+            border-radius: 8px;
+            border: 1px solid rgba(249,246,242,0.2);
+            padding: 8px 10px;
+            background: #0b0b0b;
+            color: var(--color-ivory);
+          }
+          .giordora-auth-modal button {
+            align-self: flex-end;
+          }
+
+          @media (max-width: 900px) {
+            header.giordora-header {
+              flex-wrap: wrap;
+              gap: 12px;
+              padding-bottom: 12px;
+              width: 100%;
+            }
+
+            .giordora-logo {
+              flex: 1;
+              min-width: 0;
+            }
+
+            .giordora-controls {
+              margin-left: auto;
+              min-width: 0;
+            }
+
+            .giordora-container {
+              padding: 16px 12px 64px;
+            }
+
+            .giordora-btn-gold,
+            .giordora-btn-ghost,
+            .giordora-btn-outline {
+              white-space: normal;
+            }
+
+            .giordora-controls--desktop {
+              display: none;
+            }
+
+            .giordora-controls--mobile {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 10px;
+              padding: 8px 0;
+              width: 100%;
+              border-bottom: 1px solid rgba(201,167,92,0.25);
+            }
+
+            /* Show burger on mobile */
+            .giordora-burger {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 34px;
+              height: 34px;
+              border-radius: 999px;
+              border: 1px solid rgba(201,167,92,0.7);
+              background: rgba(0,0,0,0.5);
+              cursor: pointer;
+            }
+
+            nav.giordora-nav {
+              width: 100%;
+              order: 3;
+              display: none; /* hidden by default, toggled with .giordora-nav--open */
+              flex-direction: column;
+              gap: 8px;
+              padding-top: 8px;
+              border-top: 1px solid rgba(201,167,92,0.35);
+              font-size: 12px;
+              min-width: 0;
+            }
+
+            nav.giordora-nav.giordora-nav--open {
+              display: flex;
+            }
+
+            .giordora-nav a {
+              padding: 6px 0;
+              white-space: normal;
+            }
+
+            .giordora-controls--mobile .giordora-btn-gold,
+            .giordora-controls--mobile .giordora-btn-ghost,
+            .giordora-controls--mobile .giordora-btn-outline,
+            .giordora-controls--mobile .giordora-cart-button,
+            .giordora-controls--mobile .giordora-language-select {
+              width: 100%;
+            }
+
+            .giordora-hero {
+              grid-template-columns: minmax(0, 1fr);
+            }
+
+            .giordora-hero-actions {
+              flex-direction: column;
+              align-items: stretch;
+            }
+
+            .giordora-hero {
+              grid-template-columns: minmax(0, 1fr);
+            }
+
+            .giordora-newsletter {
+              grid-template-columns: minmax(0, 1fr);
+            }
+
+            .giordora-product-hero {
+              grid-template-columns: minmax(0, 1fr);
+            }
+          }
+
+          @media (max-width: 640px) {
+            .giordora-products-grid {
+              grid-template-columns: minmax(0, 1fr);
+            }
+            .giordora-steps {
+              grid-template-columns: minmax(0, 1fr);
+            }
+            .giordora-hero-title {
+              font-size: 26px;
+            }
+
+            .giordora-container {
+              padding: 14px 12px 56px;
+            }
+
+            .giordora-hero-subtitle,
+            .giordora-section-subtitle,
+            .giordora-text-block {
+              font-size: 13px;
+              line-height: 1.65;
+            }
+
+            .giordora-newsletter {
+              padding: 16px 14px;
+            }
+
+            .giordora-mini-cart {
+              width: 100%;
+            }
+
+            .giordora-auth-modal {
+              width: 100%;
+              max-width: 100%;
+            }
+          }
+          @media (max-width: 480px) {
+            .giordora-hero-title {
+              font-size: 22px;
+            }
+            .giordora-hero-actions a,
+            .giordora-btn-gold,
+            .giordora-btn-ghost,
+            .giordora-btn-outline {
+              width: 100%;
+              text-align: center;
+            }
+            .giordora-section-header {
+              flex-direction: column;
+              align-items: flex-start;
+            }
+            .giordora-products-grid {
+              gap: 14px;
+            }
+            .giordora-product-card,
+            .giordora-newsletter {
+              padding: 14px;
+            }
+            .giordora-filters {
+              flex-direction: column;
+              align-items: stretch;
+            }
+            .giordora-search-input,
+            .giordora-select-need {
+              width: 100%;
+            }
+          }
+        
