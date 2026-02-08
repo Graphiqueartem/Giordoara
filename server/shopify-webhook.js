@@ -86,6 +86,9 @@ const normalizeStatus = (value) => String(value || "").trim().toLowerCase();
 const resolveOrderStatus = (payload) => {
   const financialStatus = normalizeStatus(payload?.financial_status);
   const fulfillmentStatus = normalizeStatus(payload?.fulfillment_status);
+  const displayFulfillmentStatus = normalizeStatus(
+    payload?.display_fulfillment_status || payload?.displayFulfillmentStatus
+  );
   const cancelledAt = payload?.cancelled_at;
 
   if (cancelledAt) return "cancelled";
@@ -94,7 +97,24 @@ const resolveOrderStatus = (payload) => {
   }
   if (fulfillmentStatus === "fulfilled") return "delivered";
   if (fulfillmentStatus === "partial") return "shipped";
-  if (fulfillmentStatus === "in_progress" || fulfillmentStatus === "open") return "processing";
+  if (
+    fulfillmentStatus === "in_progress" ||
+    fulfillmentStatus === "in progress" ||
+    fulfillmentStatus === "in-progress" ||
+    fulfillmentStatus === "open" ||
+    fulfillmentStatus === "pending"
+  ) {
+    return "processing";
+  }
+  if (/(in[ _-]?progress|processing|open|pending)/.test(displayFulfillmentStatus)) {
+    return "processing";
+  }
+  if (/(partially|partial|in[ _-]?transit|out[ _-]?for[ _-]?delivery|shipped)/.test(displayFulfillmentStatus)) {
+    return "shipped";
+  }
+  if (/(delivered|fulfilled)/.test(displayFulfillmentStatus)) {
+    return "delivered";
+  }
   if (financialStatus === "paid" || financialStatus === "authorized" || financialStatus === "partially_paid") {
     return "confirmed";
   }
@@ -118,6 +138,17 @@ const upsertOrder = async (payload, userId) => {
     currency: String(currency || "EUR"),
     items,
   };
+  console.log(
+    "Order sync:",
+    JSON.stringify({
+      order_number: normalizedOrderNumber,
+      financial_status: payload?.financial_status || null,
+      fulfillment_status: payload?.fulfillment_status || null,
+      display_fulfillment_status:
+        payload?.display_fulfillment_status || payload?.displayFulfillmentStatus || null,
+      resolved_status: record.status,
+    })
+  );
 
   const { data: updatedRows, error: updateError } = await supabaseAdmin
     .from("orders")
