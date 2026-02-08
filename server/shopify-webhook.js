@@ -73,7 +73,7 @@ const findOrderByNumber = async (orderNumber) => {
   if (!orderNumber) return null;
   const { data, error } = await supabaseAdmin
     .from("orders")
-    .select("id, user_id, order_number")
+    .select("id, user_id, order_number, status")
     .eq("order_number", orderNumber)
     .order("created_at", { ascending: false })
     .limit(1);
@@ -121,12 +121,33 @@ const resolveOrderStatus = (payload) => {
   return fulfillmentStatus || financialStatus || "processing";
 };
 
-const upsertOrder = async (payload, userId) => {
+const upsertOrder = async (payload, userId, options = {}) => {
+  const { topic = "", existingOrder = null } = options;
   const normalizedOrderNumber = resolveOrderNumber(payload);
   if (!normalizedOrderNumber) {
     throw new Error("Missing order number in Shopify payload.");
   }
-  const status = resolveOrderStatus(payload);
+  let status = resolveOrderStatus(payload);
+  const normalizedTopic = String(topic || "").toLowerCase();
+  const existingStatus = normalizeStatus(existingOrder?.status);
+  const financialStatus = normalizeStatus(payload?.financial_status);
+  const fulfillmentStatus = normalizeStatus(payload?.fulfillment_status);
+  const displayFulfillmentStatus = normalizeStatus(
+    payload?.display_fulfillment_status || payload?.displayFulfillmentStatus
+  );
+
+  // Some merchant actions (for example "mark in progress") are emitted as orders/updated
+  // but don't carry fulfillment_status in payload. Promote confirmed -> processing on update.
+  if (
+    normalizedTopic === "orders/updated" &&
+    (existingStatus === "confirmed" || existingStatus === "paid") &&
+    status === "confirmed" &&
+    financialStatus === "paid" &&
+    !fulfillmentStatus &&
+    !displayFulfillmentStatus
+  ) {
+    status = "processing";
+  }
   const totalAmount = payload?.total_price ? Number(payload.total_price) : null;
   const currency = payload?.currency || payload?.presentment_currency || "EUR";
   const items = parseOrderItems(payload);
@@ -147,6 +168,7 @@ const upsertOrder = async (payload, userId) => {
       display_fulfillment_status:
         payload?.display_fulfillment_status || payload?.displayFulfillmentStatus || null,
       resolved_status: record.status,
+      topic: normalizedTopic || null,
     })
   );
 
@@ -204,7 +226,7 @@ const server = http.createServer((req, res) => {
       // If we already have this order in DB, update it directly.
       const existingOrder = await findOrderByNumber(orderNumber);
       if (existingOrder?.user_id) {
-        await upsertOrder(payload, existingOrder.user_id);
+        await upsertOrder(payload, existingOrder.user_id, { topic, existingOrder });
         res.writeHead(200);
         res.end("OK");
         return;
@@ -213,7 +235,7 @@ const server = http.createServer((req, res) => {
       const supabaseUserId = extractSupabaseUserId(payload);
       if (supabaseUserId) {
         console.log("Using supabase_user_id attribute:", supabaseUserId);
-        await upsertOrder(payload, supabaseUserId);
+        await upsertOrder(payload, supabaseUserId, { topic, existingOrder });
         res.writeHead(200);
         res.end("OK");
         return;
@@ -232,7 +254,7 @@ const server = http.createServer((req, res) => {
         res.end("No matching user");
         return;
       }
-      await upsertOrder(payload, user.id);
+      await upsertOrder(payload, user.id, { topic, existingOrder });
       res.writeHead(200);
       res.end("OK");
     } catch (error) {
