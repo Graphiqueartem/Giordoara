@@ -70,6 +70,24 @@ const TRANSLATIONS = {
     contact_title: "Contact",
     contact_text:
       "Une question sur votre commande ou votre routine ? Écrivez-nous, nous serons ravis de vous répondre.",
+    contact_page_title: "Contactez-nous",
+    contact_page_subtitle: "Notre équipe vous répond sous 24 à 48 heures ouvrées.",
+    contact_form_name: "Nom complet",
+    contact_form_email: "Adresse e-mail",
+    contact_form_subject: "Sujet",
+    contact_form_message: "Message",
+    contact_form_name_placeholder: "Votre nom",
+    contact_form_email_placeholder: "vous@example.com",
+    contact_form_subject_placeholder: "Commande, routine, partenariat...",
+    contact_form_message_placeholder: "Comment pouvons-nous vous aider ?",
+    contact_form_submit: "Envoyer le message",
+    contact_form_error_required: "Merci de remplir tous les champs.",
+    contact_form_error_email: "Merci d'indiquer une adresse e-mail valide.",
+    contact_form_success: "Merci. Votre message est prêt à être envoyé.",
+    contact_form_support_title: "Service client Giordora",
+    contact_form_support_text:
+      "Questions produits, commandes ou partenariats : notre équipe est à votre écoute.",
+    contact_form_support_hours: "Lun-Ven, 9h-18h (CET)",
     footer_rights: `© ${new Date().getFullYear()} GIORDORA PARIS - Tous droits réservés.`,
     footer_made_in: "Créé à Paris, fabriqué en France.",
     btn_add_to_cart: "Ajouter au rituel",
@@ -131,6 +149,15 @@ const TRANSLATIONS = {
     account_status: "Statut",
     account_total: "Total",
     account_date: "Date",
+    account_track_order: "Suivre ma commande",
+    account_tracking_progress: "Suivi de commande",
+    account_tracking_current: "Statut actuel",
+    order_status_processing: "En préparation",
+    order_step_confirmed: "Confirmée",
+    order_step_preparing: "Préparation",
+    order_step_shipped: "Expédiée",
+    order_step_delivered: "Livrée",
+    order_tracking_cancelled: "Cette commande a été annulée ou remboursée.",
     badge_made_in_france: "Made in France",
     badge_clean_beauty: "Clean Beauty",
     badge_cruelty_free: "Cruelty-Free",
@@ -201,6 +228,24 @@ const TRANSLATIONS = {
     contact_title: "Contact",
     contact_text:
       "Questions about your order or your routine? Write to us, we will be delighted to assist you.",
+    contact_page_title: "Contact Us",
+    contact_page_subtitle: "Our team replies within 24 to 48 business hours.",
+    contact_form_name: "Full name",
+    contact_form_email: "Email address",
+    contact_form_subject: "Subject",
+    contact_form_message: "Message",
+    contact_form_name_placeholder: "Your name",
+    contact_form_email_placeholder: "you@example.com",
+    contact_form_subject_placeholder: "Order, routine, partnership...",
+    contact_form_message_placeholder: "How can we help you?",
+    contact_form_submit: "Send message",
+    contact_form_error_required: "Please complete all fields.",
+    contact_form_error_email: "Please enter a valid email address.",
+    contact_form_success: "Thank you. Your message is ready to be sent.",
+    contact_form_support_title: "Giordora customer care",
+    contact_form_support_text:
+      "Product, order or partnership questions: our team is here to help.",
+    contact_form_support_hours: "Mon-Fri, 9am-6pm (CET)",
     footer_rights: `© ${new Date().getFullYear()} GIORDORA PARIS - All rights reserved.`,
     footer_made_in: "Created in Paris, made in France.",
     btn_add_to_cart: "Add to ritual",
@@ -262,6 +307,15 @@ const TRANSLATIONS = {
     account_status: "Status",
     account_total: "Total",
     account_date: "Date",
+    account_track_order: "Track my order",
+    account_tracking_progress: "Order tracking",
+    account_tracking_current: "Current status",
+    order_status_processing: "Processing",
+    order_step_confirmed: "Confirmed",
+    order_step_preparing: "Preparing",
+    order_step_shipped: "Shipped",
+    order_step_delivered: "Delivered",
+    order_tracking_cancelled: "This order has been cancelled or refunded.",
     badge_made_in_france: "Made in France",
     badge_clean_beauty: "Clean Beauty",
     badge_cruelty_free: "Cruelty-Free",
@@ -332,6 +386,24 @@ const TRANSLATIONS = {
     contact_title: "Contatto",
     contact_text:
       "Domande sul tuo ordine o sulla tua routine? Scrivici, saremo lieti di aiutarti.",
+    contact_page_title: "Contattaci",
+    contact_page_subtitle: "Il nostro team risponde entro 24-48 ore lavorative.",
+    contact_form_name: "Nome completo",
+    contact_form_email: "Indirizzo email",
+    contact_form_subject: "Oggetto",
+    contact_form_message: "Messaggio",
+    contact_form_name_placeholder: "Il tuo nome",
+    contact_form_email_placeholder: "tu@example.com",
+    contact_form_subject_placeholder: "Ordine, routine, partnership...",
+    contact_form_message_placeholder: "Come possiamo aiutarti?",
+    contact_form_submit: "Invia messaggio",
+    contact_form_error_required: "Compila tutti i campi.",
+    contact_form_error_email: "Inserisci un indirizzo email valido.",
+    contact_form_success: "Grazie. Il tuo messaggio e pronto per l'invio.",
+    contact_form_support_title: "Servizio clienti Giordora",
+    contact_form_support_text:
+      "Domande su prodotti, ordini o partnership: il nostro team e a tua disposizione.",
+    contact_form_support_hours: "Lun-Ven, 9:00-18:00 (CET)",
     footer_rights: `© ${new Date().getFullYear()} GIORDORA PARIS - Tutti i diritti riservati.`,
     footer_made_in: "Creato a Parigi, prodotto in Francia.",
     btn_add_to_cart: "Aggiungi al rituale",
@@ -393,6 +465,15 @@ const TRANSLATIONS = {
     account_status: "Stato",
     account_total: "Totale",
     account_date: "Data",
+    account_track_order: "Traccia il mio ordine",
+    account_tracking_progress: "Tracciamento ordine",
+    account_tracking_current: "Stato attuale",
+    order_status_processing: "In preparazione",
+    order_step_confirmed: "Confermato",
+    order_step_preparing: "Preparazione",
+    order_step_shipped: "Spedito",
+    order_step_delivered: "Consegnato",
+    order_tracking_cancelled: "Questo ordine e stato annullato o rimborsato.",
     badge_made_in_france: "Made in France",
     badge_clean_beauty: "Clean Beauty",
     badge_cruelty_free: "Cruelty-Free",
@@ -460,6 +541,24 @@ const TRANSLATIONS = {
     contact_title: "Contacto",
     contact_text:
       "¿Preguntas sobre tu pedido o tu rutinX Escríbenos, estaremos encantados de ayudarte.",
+    contact_page_title: "Contactanos",
+    contact_page_subtitle: "Nuestro equipo responde en 24 a 48 horas habiles.",
+    contact_form_name: "Nombre completo",
+    contact_form_email: "Correo electronico",
+    contact_form_subject: "Asunto",
+    contact_form_message: "Mensaje",
+    contact_form_name_placeholder: "Tu nombre",
+    contact_form_email_placeholder: "tu@example.com",
+    contact_form_subject_placeholder: "Pedido, rutina, colaboracion...",
+    contact_form_message_placeholder: "Como podemos ayudarte?",
+    contact_form_submit: "Enviar mensaje",
+    contact_form_error_required: "Completa todos los campos.",
+    contact_form_error_email: "Introduce un correo electronico valido.",
+    contact_form_success: "Gracias. Tu mensaje esta listo para enviarse.",
+    contact_form_support_title: "Atencion al cliente Giordora",
+    contact_form_support_text:
+      "Dudas sobre productos, pedidos o colaboraciones: nuestro equipo esta para ayudarte.",
+    contact_form_support_hours: "Lun-Vie, 9:00-18:00 (CET)",
     footer_rights: `© ${new Date().getFullYear()} GIORDORA PARIS - Todos los derechos reservados.`,
     footer_made_in: "Creado en París, fabricado en Francia.",
     btn_add_to_cart: "Añadir al ritual",
@@ -521,6 +620,15 @@ const TRANSLATIONS = {
     account_status: "Estado",
     account_total: "Total",
     account_date: "Fecha",
+    account_track_order: "Rastrear mi pedido",
+    account_tracking_progress: "Seguimiento del pedido",
+    account_tracking_current: "Estado actual",
+    order_status_processing: "En preparacion",
+    order_step_confirmed: "Confirmado",
+    order_step_preparing: "Preparacion",
+    order_step_shipped: "Enviado",
+    order_step_delivered: "Entregado",
+    order_tracking_cancelled: "Este pedido fue cancelado o reembolsado.",
     quickview_more: "Saber más",
     quickview_routine_hint:
       "Consejo: combinado con Radiant Infusion, los resultados son aún más visibles.",
@@ -1191,6 +1299,14 @@ export default function GiordoraLuxuryBoutique() {
   const [needFilter, setNeedFilter] = useState("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterDone, setNewsletterDone] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [contactError, setContactError] = useState("");
+  const [contactNotice, setContactNotice] = useState("");
   const [navOpen, setNavOpen] = useState(false);
   const [productDetail, setProductDetail] = useState(null);
   const [heroSlide, setHeroSlide] = useState(0);
@@ -1270,13 +1386,16 @@ export default function GiordoraLuxuryBoutique() {
   }, [authUser]);
 
   useEffect(() => {
-    if (!supabaseEnabled || !authUser) {
-      setOrders([]);
+    if (!supabaseEnabled || !authUser || page !== "account") {
+      if (!authUser) setOrders([]);
       return;
     }
     let active = true;
-    const loadOrders = async () => {
-      setOrdersLoading(true);
+    const refreshMs = 15000;
+    let pollId = null;
+
+    const loadOrders = async ({ silent = false } = {}) => {
+      if (!silent) setOrdersLoading(true);
       setOrdersError("");
       const { data, error } = await supabase
         .from("orders")
@@ -1286,21 +1405,48 @@ export default function GiordoraLuxuryBoutique() {
       if (!active) return;
       if (error) {
         setOrdersError(error.message || "Unable to load orders.");
-        setOrders([]);
+        if (!silent) setOrders([]);
       } else {
         setOrders(data || []);
       }
-      setOrdersLoading(false);
+      if (!silent) setOrdersLoading(false);
     };
+
     loadOrders().catch(() => {
       if (!active) return;
       setOrdersError("Unable to load orders.");
       setOrdersLoading(false);
     });
+
+    pollId = setInterval(() => {
+      loadOrders({ silent: true }).catch(() => {
+        if (!active) return;
+        setOrdersError("Unable to refresh orders.");
+      });
+    }, refreshMs);
+
     return () => {
       active = false;
+      if (pollId) clearInterval(pollId);
     };
-  }, [authUser, supabaseEnabled]);
+  }, [authUser, page, supabaseEnabled]);
+
+  useEffect(() => {
+    if (!selectedOrder || orders.length === 0) return;
+    const latest =
+      orders.find((order) => order.id === selectedOrder.id) ||
+      orders.find((order) => String(order.order_number) === String(selectedOrder.order_number));
+    if (!latest) return;
+    if (
+      latest.status !== selectedOrder.status ||
+      latest.total_amount !== selectedOrder.total_amount ||
+      latest.currency !== selectedOrder.currency ||
+      latest.created_at !== selectedOrder.created_at ||
+      JSON.stringify(latest.items || []) !== JSON.stringify(selectedOrder.items || [])
+    ) {
+      setSelectedOrder(latest);
+    }
+  }, [orders, selectedOrder]);
 
   const handleNavigate = (nextPage) => {
     setPage(nextPage);
@@ -1445,6 +1591,31 @@ export default function GiordoraLuxuryBoutique() {
     const total = order?.total_amount ?? order?.total ?? 0;
     const currency = order?.currency || "EUR";
     return { total, currency };
+  };
+
+  const formatOrderStatus = (status) => {
+    if (!status) return t("order_status_processing");
+    const label = String(status).replace(/[_-]+/g, " ").trim();
+    if (!label) return t("order_status_processing");
+    return label.charAt(0).toUpperCase() + label.slice(1);
+  };
+
+  const getOrderTracking = (status) => {
+    const normalized = String(status || "").toLowerCase();
+    const isCancelled = /(cancel|refund|failed)/.test(normalized);
+    if (isCancelled) {
+      return { stage: 0, isCancelled: true };
+    }
+    if (/(delivered|complete|completed)/.test(normalized)) {
+      return { stage: 3, isCancelled: false };
+    }
+    if (/(shipped|transit|dispatch|fulfilled|out for delivery)/.test(normalized)) {
+      return { stage: 2, isCancelled: false };
+    }
+    if (/(prepar|process|progress|pack|picking)/.test(normalized)) {
+      return { stage: 1, isCancelled: false };
+    }
+    return { stage: 0, isCancelled: false };
   };
 
   const heroSlides = [
@@ -1756,6 +1927,38 @@ export default function GiordoraLuxuryBoutique() {
     setNewsletterDone(true);
   };
 
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    setContactError("");
+    setContactNotice("");
+    const name = contactForm.name.trim();
+    const email = contactForm.email.trim();
+    const subject = contactForm.subject.trim();
+    const message = contactForm.message.trim();
+
+    if (!name || !email || !subject || !message) {
+      setContactError(t("contact_form_error_required"));
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setContactError(t("contact_form_error_email"));
+      return;
+    }
+
+    const params = new URLSearchParams({
+      subject: `[Giordora] ${subject}`,
+      body: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+    });
+    window.location.href = `mailto:contact@giordora.com?${params.toString()}`;
+    setContactNotice(t("contact_form_success"));
+    setContactForm({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
+  };
+
   const detailProduct =
     productDetail && (PRODUCT_DETAILS[productDetail] || shopifyProducts[productDetail])
       ? {
@@ -1768,6 +1971,13 @@ export default function GiordoraLuxuryBoutique() {
           ],
         }
       : null;
+
+  const orderTrackingSteps = [
+    t("order_step_confirmed"),
+    t("order_step_preparing"),
+    t("order_step_shipped"),
+    t("order_step_delivered"),
+  ];
 
   const renderFilters = () => (
     <div className="giordora-filters">
@@ -1797,10 +2007,35 @@ export default function GiordoraLuxuryBoutique() {
           <div className="giordora-product-tagline">
             {p.key === "essence" ? t("essence_tagline") : t("radiant_tagline")}
           </div>
-          <div className="giordora-product-name">{productName(p.key)}</div>
+          <button
+            type="button"
+            className="giordora-product-name giordora-product-link-reset"
+            onClick={() => setProductDetail(p.key)}
+            aria-label={`${productName(p.key)} - ${t("btn_view_product")}`}
+          >
+            {productName(p.key)}
+          </button>
           <div className="giordora-product-desc">
             {p.key === "essence" ? t("essence_short") : t("radiant_short")}
           </div>
+          <button
+            type="button"
+            className="giordora-product-media giordora-product-link-reset"
+            onClick={() => setProductDetail(p.key)}
+            aria-label={`${productName(p.key)} - ${t("btn_view_product")}`}
+          >
+            <img
+              src={p.image || PRODUCT_DETAILS[p.key]?.image}
+              alt={productName(p.key)}
+              loading="lazy"
+              onError={(e) => {
+                const fallback =
+                  "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80";
+                if (e.currentTarget.src === fallback) return;
+                e.currentTarget.src = fallback;
+              }}
+            />
+          </button>
           <div className="giordora-product-meta">{p.size}</div>
           <div className="giordora-product-footer">
             <div className="giordora-product-price">
@@ -1999,12 +2234,7 @@ export default function GiordoraLuxuryBoutique() {
                       ? order.order_number
                       : String(orderNumber).slice(-6);
                     return (
-                      <button
-                        key={order.id}
-                        className="giordora-account-order-card giordora-account-order-card--clickable"
-                        type="button"
-                        onClick={() => setSelectedOrder(order)}
-                      >
+                      <article key={order.id} className="giordora-account-order-card">
                         <div className="giordora-account-order-top">
                           <div>
                             <div className="giordora-account-order-number">
@@ -2015,7 +2245,7 @@ export default function GiordoraLuxuryBoutique() {
                             </div>
                           </div>
                           <div className="giordora-account-order-meta">
-                            <span className="giordora-order-status">{order.status || "Processing"}</span>
+                            <span className="giordora-order-status">{formatOrderStatus(order.status)}</span>
                             <strong>{formatPrice(orderTotal, locale, orderCurrency)}</strong>
                           </div>
                         </div>
@@ -2029,7 +2259,16 @@ export default function GiordoraLuxuryBoutique() {
                             ))}
                           </div>
                         )}
-                      </button>
+                        <div className="giordora-account-order-actions">
+                          <button
+                            type="button"
+                            className="giordora-btn-outline giordora-track-order-btn"
+                            onClick={() => setSelectedOrder(order)}
+                          >
+                            {t("account_track_order")}
+                          </button>
+                        </div>
+                      </article>
                     );
                   })}
                 </div>
@@ -2056,7 +2295,7 @@ export default function GiordoraLuxuryBoutique() {
               <div>
                 <div className="giordora-account-section-title">{t("account_status")}</div>
                 <div className="giordora-order-status">
-                  {selectedOrder.status || "Processing"}
+                  {formatOrderStatus(selectedOrder.status)}
                 </div>
               </div>
               <div>
@@ -2077,6 +2316,49 @@ export default function GiordoraLuxuryBoutique() {
                 </div>
               </div>
             </div>
+            {(() => {
+              const tracking = getOrderTracking(selectedOrder.status);
+              const progress = tracking.isCancelled
+                ? 0
+                : Math.round((tracking.stage / (orderTrackingSteps.length - 1)) * 100);
+              return (
+                <>
+                  <div className="giordora-account-section-title">{t("account_tracking_progress")}</div>
+                  {tracking.isCancelled ? (
+                    <div className="giordora-auth-status giordora-auth-status--error">
+                      {t("order_tracking_cancelled")}
+                    </div>
+                  ) : (
+                    <div className="giordora-order-tracker">
+                      <div className="giordora-order-tracker-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
+                        <span style={{ width: `${progress}%` }} />
+                      </div>
+                      <div className="giordora-order-tracker-steps">
+                        {orderTrackingSteps.map((step, idx) => (
+                          <div
+                            key={step}
+                            className={
+                              "giordora-order-tracker-step " +
+                              (idx < tracking.stage
+                                ? "is-complete"
+                                : idx === tracking.stage
+                                  ? "is-active"
+                                  : "is-pending")
+                            }
+                          >
+                            <div className="giordora-order-tracker-dot">{idx + 1}</div>
+                            <div className="giordora-order-tracker-label">{step}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="giordora-account-muted">
+                        {t("account_tracking_current")}: <strong>{orderTrackingSteps[tracking.stage]}</strong>
+                      </div>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
             <div className="giordora-account-section-title">{t("account_orders")}</div>
             <div className="giordora-order-detail-items">
               {normalizeOrderItems(selectedOrder).length === 0 && (
@@ -2102,6 +2384,92 @@ export default function GiordoraLuxuryBoutique() {
           </div>
         </div>
       )}
+    </main>
+  );
+
+  const renderContactPage = () => (
+    <main className="giordora-contact-page">
+      <section className="giordora-section">
+        <div className="giordora-section-header">
+          <div>
+            <div className="giordora-section-title">{t("contact_page_title")}</div>
+            <div className="giordora-section-subtitle">{t("contact_page_subtitle")}</div>
+          </div>
+          <div className="giordora-shop-toolbar">
+            <button className="giordora-btn-outline" onClick={() => handleNavigate("home")}>
+              ← {t("nav_home")}
+            </button>
+          </div>
+        </div>
+
+        <div className="giordora-contact-grid">
+          <div className="giordora-account-card giordora-contact-support">
+            <div className="giordora-account-section-title">{t("contact_form_support_title")}</div>
+            <div className="giordora-text-block giordora-contact-support-text">
+              {t("contact_form_support_text")}
+            </div>
+            <a className="giordora-contact-email" href="mailto:contact@giordora.com">
+              contact@giordora.com
+            </a>
+            <div className="giordora-contact-support-hours">{t("contact_form_support_hours")}</div>
+          </div>
+
+          <form className="giordora-account-card giordora-account-form giordora-contact-form" onSubmit={handleContactSubmit}>
+            <div className="giordora-account-form-row">
+              <label>
+                {t("contact_form_name")}
+                <input
+                  type="text"
+                  value={contactForm.name}
+                  onChange={(e) => setContactForm((prev) => ({ ...prev, name: e.target.value }))}
+                  placeholder={t("contact_form_name_placeholder")}
+                  required
+                />
+              </label>
+              <label>
+                {t("contact_form_email")}
+                <input
+                  type="email"
+                  value={contactForm.email}
+                  onChange={(e) => setContactForm((prev) => ({ ...prev, email: e.target.value }))}
+                  placeholder={t("contact_form_email_placeholder")}
+                  required
+                />
+              </label>
+            </div>
+
+            <label>
+              {t("contact_form_subject")}
+              <input
+                type="text"
+                value={contactForm.subject}
+                onChange={(e) => setContactForm((prev) => ({ ...prev, subject: e.target.value }))}
+                placeholder={t("contact_form_subject_placeholder")}
+                required
+              />
+            </label>
+
+            <label>
+              {t("contact_form_message")}
+              <textarea
+                value={contactForm.message}
+                onChange={(e) => setContactForm((prev) => ({ ...prev, message: e.target.value }))}
+                placeholder={t("contact_form_message_placeholder")}
+                required
+              />
+            </label>
+
+            {contactError && <div className="giordora-auth-status giordora-auth-status--error">{contactError}</div>}
+            {contactNotice && <div className="giordora-auth-status">{contactNotice}</div>}
+
+            <div className="giordora-account-form-actions">
+              <button className="giordora-btn-gold" type="submit">
+                {t("contact_form_submit")}
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
     </main>
   );
 
@@ -2149,7 +2517,7 @@ export default function GiordoraLuxuryBoutique() {
             flex-direction: column;
             align-items: stretch;
             gap: 10px;
-            padding: 14px 24px 6px;
+            padding: 10px 24px 2px;
             position: sticky;
             top: 0;
             z-index: 20;
@@ -2167,7 +2535,7 @@ export default function GiordoraLuxuryBoutique() {
             align-items: center;
             gap: 16px;
             width: 100%;
-            padding: 6px 0 12px;
+            padding: 4px 0 6px;
           }
 
           .giordora-top-left,
@@ -2226,18 +2594,22 @@ export default function GiordoraLuxuryBoutique() {
             font-size: 12px;
             letter-spacing: 0.14em;
             width: 100%;
-            padding: 10px 8px 12px;
+            padding: 0 8px;
+            min-height: 44px;
             border-top: 1px solid rgba(201,167,92,0.22);
             border-bottom: 0;
             text-transform: uppercase;
+            margin: 0 auto;
+            text-align: center;
           }
           .giordora-nav a {
             color: rgba(249,246,242,0.82);
             text-decoration: none;
             position: relative;
-            padding-bottom: 8px;
+            padding: 8px 0;
             font-weight: 700;
             transition: color 0.2s ease;
+            line-height: 1;
           }
           .giordora-nav a::after {
             content: "";
@@ -2468,9 +2840,9 @@ export default function GiordoraLuxuryBoutique() {
           /* Hero */
           .giordora-hero {
             display: grid;
-            grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
-            gap: 48px;
-            padding: 64px 48px;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 28px;
+            padding: 8px 0 0;
             color: #ffffff;
             background: #0c0c0c;
             border-radius: 0;
@@ -2480,7 +2852,7 @@ export default function GiordoraLuxuryBoutique() {
           }
           .giordora-hero-slider {
             background: #0c0c0c;
-            border-radius: 18px;
+            border-radius: 0;
             padding: 0;
             box-shadow: 0 22px 50px rgba(0,0,0,0.42);
             position: relative;
@@ -2538,18 +2910,21 @@ export default function GiordoraLuxuryBoutique() {
           .giordora-hero-slide-media {
             position: relative;
             overflow: hidden;
-            border-radius: 16px;
+            border-radius: 0;
             box-shadow: 0 16px 32px rgba(0,0,0,0.4);
             background: #0a0a0a;
             width: 100%;
-            aspect-ratio: 16 / 9;
+            height: calc(100vh - 220px);
+            min-height: 420px;
+            max-height: 720px;
           }
           .giordora-hero-slide-media img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             display: block;
-            border-radius: 16px;
+            border-radius: 0;
           }
           .giordora-hero-subtitle {
             font-size: 16px;
@@ -2858,6 +3233,17 @@ export default function GiordoraLuxuryBoutique() {
             letter-spacing: 0.12em;
             font-weight: 600;
           }
+          .giordora-product-link-reset {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+          }
           .giordora-product-name {
             font-size: 20px;
             letter-spacing: 0.02em;
@@ -2865,10 +3251,39 @@ export default function GiordoraLuxuryBoutique() {
             font-weight: 700;
             color: #0f0f0f;
           }
+          .giordora-product-name.giordora-product-link-reset:hover {
+            color: var(--color-gold);
+          }
+          .giordora-product-name.giordora-product-link-reset:focus-visible,
+          .giordora-product-media.giordora-product-link-reset:focus-visible {
+            outline: 2px solid var(--color-gold);
+            outline-offset: 4px;
+          }
           .giordora-product-desc {
             font-size: 14px;
             color: #4f4f4f;
             line-height: 1.8;
+          }
+          .giordora-product-media {
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(201,167,92,0.16), rgba(255,255,255,0.9));
+            border: 1px solid rgba(201,167,92,0.35);
+            height: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .giordora-product-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.28s ease;
+          }
+          .giordora-product-media.giordora-product-link-reset:hover img,
+          .giordora-product-media.giordora-product-link-reset:focus-visible img {
+            transform: scale(1.03);
           }
           .giordora-product-meta {
             font-size: 12px;
@@ -2994,6 +3409,41 @@ export default function GiordoraLuxuryBoutique() {
           .giordora-contact-email {
             color: var(--color-gold);
             text-decoration: none;
+          }
+          .giordora-contact-page {
+            padding: 24px 0 60px;
+          }
+          .giordora-contact-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+            gap: 18px;
+            margin-top: 16px;
+          }
+          .giordora-contact-support {
+            justify-content: space-between;
+          }
+          .giordora-contact-support-text {
+            color: #4f4f4f;
+            max-width: 100%;
+          }
+          .giordora-contact-support-hours {
+            font-size: 12px;
+            color: #6b6356;
+          }
+          .giordora-contact-form textarea {
+            border-radius: 10px;
+            border: 1px solid #e2d7c3;
+            padding: 10px 12px;
+            background: #fff;
+            font-family: inherit;
+            min-height: 140px;
+            resize: vertical;
+          }
+          .giordora-contact-form input:focus,
+          .giordora-contact-form textarea:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            box-shadow: 0 0 0 3px rgba(201,167,92,0.18);
           }
           /* Newsletter */
           .giordora-newsletter {
@@ -3550,6 +4000,13 @@ export default function GiordoraLuxuryBoutique() {
             text-align: left;
             width: 100%;
           }
+          .giordora-account-order-actions {
+            display: flex;
+            justify-content: flex-end;
+          }
+          .giordora-track-order-btn {
+            padding: 7px 12px;
+          }
           .giordora-account-order-card--clickable {
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -3650,6 +4107,68 @@ export default function GiordoraLuxuryBoutique() {
             gap: 4px;
             font-size: 13px;
             color: #4f4f4f;
+          }
+          .giordora-order-tracker {
+            background: #fff;
+            border: 1px solid #e2d7c3;
+            border-radius: 14px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+          }
+          .giordora-order-tracker-progress {
+            height: 6px;
+            border-radius: 999px;
+            background: #efe5d6;
+            overflow: hidden;
+          }
+          .giordora-order-tracker-progress span {
+            display: block;
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #b89041, #d4b06a);
+            transition: width 0.25s ease;
+          }
+          .giordora-order-tracker-steps {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+          }
+          .giordora-order-tracker-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+          }
+          .giordora-order-tracker-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            border: 1px solid #d8c8af;
+            background: #f4ebdd;
+            color: #5a4b33;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .giordora-order-tracker-label {
+            font-size: 11px;
+            color: #6b6356;
+            letter-spacing: 0.04em;
+          }
+          .giordora-order-tracker-step.is-complete .giordora-order-tracker-dot,
+          .giordora-order-tracker-step.is-active .giordora-order-tracker-dot {
+            border-color: #b89041;
+            background: #b89041;
+            color: #fff;
+          }
+          .giordora-order-tracker-step.is-active .giordora-order-tracker-label {
+            color: #3d2f17;
+            font-weight: 600;
           }
           .giordora-account-order-item {
             display: flex;
@@ -3902,10 +4421,17 @@ export default function GiordoraLuxuryBoutique() {
           }
 
           @media (max-width: 900px) {
+            html,
+            body {
+              background-color: #0c0c0c;
+            }
+
             header.giordora-header {
               gap: 8px;
               padding-bottom: 12px;
-              width: 100%;
+              width: 100vw;
+              margin-left: calc(50% - 50vw);
+              padding-top: env(safe-area-inset-top);
             }
 
             .giordora-header-top {
@@ -3918,7 +4444,7 @@ export default function GiordoraLuxuryBoutique() {
             }
 
             .giordora-container {
-              padding: 0 12px 40px;
+              padding: 0 0 40px;
             }
 
             .giordora-btn-gold,
@@ -4008,6 +4534,31 @@ export default function GiordoraLuxuryBoutique() {
               grid-template-columns: minmax(0, 1fr);
             }
 
+            .giordora-hero {
+              padding: 0;
+            }
+
+            .giordora-hero-slide-media {
+              height: calc(100svh - 170px);
+              min-height: 320px;
+              max-height: 620px;
+            }
+
+            .giordora-hero-slide-media img {
+              object-position: center 30%;
+            }
+
+            .giordora-hero-overlay {
+              max-width: 92%;
+              inset: 14px 14px auto 14px;
+              padding: 12px 12px;
+            }
+
+            .giordora-section {
+              padding-left: 12px;
+              padding-right: 12px;
+            }
+
             .giordora-newsletter {
               grid-template-columns: minmax(0, 1fr);
             }
@@ -4017,6 +4568,10 @@ export default function GiordoraLuxuryBoutique() {
             }
 
             .giordora-account-grid {
+              grid-template-columns: minmax(0, 1fr);
+            }
+
+            .giordora-contact-grid {
               grid-template-columns: minmax(0, 1fr);
             }
           }
@@ -4081,6 +4636,68 @@ export default function GiordoraLuxuryBoutique() {
 
             .giordora-order-detail-grid {
               grid-template-columns: minmax(0, 1fr);
+            }
+
+            .giordora-order-tracker-steps {
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .giordora-account-order-actions {
+              justify-content: stretch;
+            }
+
+            .giordora-track-order-btn {
+              width: 100%;
+            }
+
+            .giordora-product-media {
+              order: 0;
+              height: 160px;
+            }
+
+            .giordora-product-tagline {
+              order: 1;
+            }
+
+            .giordora-product-name {
+              order: 2;
+            }
+
+            .giordora-product-desc {
+              order: 3;
+            }
+
+            .giordora-product-meta {
+              order: 4;
+            }
+
+            .giordora-product-footer {
+              order: 5;
+            }
+
+            .giordora-hero-slide-media {
+              height: calc(100svh - 150px);
+              min-height: 300px;
+              max-height: 520px;
+            }
+
+            .giordora-hero-overlay {
+              max-width: 100%;
+              inset: 12px;
+              padding: 12px;
+            }
+
+            .giordora-hero-slide-media img {
+              object-position: center 28%;
+            }
+
+            .giordora-hero-title {
+              font-size: 24px;
+              letter-spacing: 0.06em;
+            }
+
+            .giordora-hero-subtitle {
+              font-size: 13px;
             }
           }
           @media (max-width: 480px) {
@@ -4281,7 +4898,7 @@ export default function GiordoraLuxuryBoutique() {
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
-                navigateToSection("contact");
+                handleNavigate("contact");
               }}
             >
               {t("nav_contact")}
@@ -4303,6 +4920,8 @@ export default function GiordoraLuxuryBoutique() {
           renderShopPage()
         ) : page === "account" ? (
           renderAccountPage()
+        ) : page === "contact" ? (
+          renderContactPage()
         ) : (
           <main>
           <section id="home" className="giordora-hero">
@@ -4343,50 +4962,6 @@ export default function GiordoraLuxuryBoutique() {
                 </button>
               </div>
             </div>
-
-            <div className="giordora-hero-visual">
-              <div className="giordora-hero-visual-inner">
-                <div className="giordora-hero-card">
-                  <div>
-                    <div className="giordora-hero-pill">{t("essence_tagline")}</div>
-                    <h3>{t("essence_name")}</h3>
-                    <p>{t("essence_short")}</p>
-                  </div>
-                  <div>
-                    <div className="giordora-hero-price">
-                      {t("price_label")}: {priceForKey("essence")}
-                    </div>
-                    <button
-                      className="giordora-btn-gold"
-                      onClick={() => handleAddToCart("essence")}
-                    >
-                      {t("btn_add_to_cart")}
-                    </button>
-                  </div>
-                </div>
-                <div className="giordora-hero-card">
-                  <div>
-                    <div className="giordora-hero-pill">{t("radiant_tagline")}</div>
-                    <h3>{t("radiant_name")}</h3>
-                    <p>{t("radiant_short")}</p>
-                  </div>
-                  <div>
-                    <div className="giordora-hero-price">
-                      {t("price_label")}: {priceForKey("radiant")}
-                    </div>
-                    <button
-                      className="giordora-btn-gold"
-                      onClick={() => handleAddToCart("radiant")}
-                    >
-                      {t("btn_add_to_cart")}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            <div className="giordora-hero-mini">
-              <strong>{t("section_routine_title")}:</strong> {t("section_routine_text")}
-            </div>
-          </div>
         </section>
 
           <section id="products" className="giordora-section">
@@ -4516,7 +5091,7 @@ export default function GiordoraLuxuryBoutique() {
                 <a href="#about" onClick={(e) => { e.preventDefault(); navigateToSection("about"); }}>
                   La Maison Giordora
                 </a>
-                <a href="#contact" onClick={(e) => { e.preventDefault(); navigateToSection("contact"); }}>
+                <a href="#contact" onClick={(e) => { e.preventDefault(); handleNavigate("contact"); }}>
                   Contact
                 </a>
                 <a href="#faq" onClick={(e) => e.preventDefault()}>

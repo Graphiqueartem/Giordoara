@@ -11,6 +11,7 @@ create table if not exists public.orders (
 );
 
 create index if not exists orders_user_id_idx on public.orders (user_id);
+create index if not exists orders_user_order_number_idx on public.orders (user_id, order_number);
 
 alter table public.orders enable row level security;
 

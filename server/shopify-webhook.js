@@ -39,6 +39,9 @@ const parseOrderItems = (payload) =>
     price: item?.price ? Number(item.price) : null,
   }));
 
+const resolveOrderNumber = (payload) =>
+  String(payload?.order_number || payload?.name || payload?.id || "").trim();
+
 const extractAttribute = (attributes, key) => {
   if (!Array.isArray(attributes)) return null;
   const match = attributes.find((attr) => (attr?.name || attr?.key) === key);
@@ -66,27 +69,75 @@ const findUserByEmail = async (email) => {
   return data?.users?.find((user) => user.email?.toLowerCase() === target) || null;
 };
 
+const findOrderByNumber = async (orderNumber) => {
+  if (!orderNumber) return null;
+  const { data, error } = await supabaseAdmin
+    .from("orders")
+    .select("id, user_id, order_number")
+    .eq("order_number", orderNumber)
+    .order("created_at", { ascending: false })
+    .limit(1);
+  if (error) throw error;
+  return Array.isArray(data) && data.length > 0 ? data[0] : null;
+};
+
+const normalizeStatus = (value) => String(value || "").trim().toLowerCase();
+
+const resolveOrderStatus = (payload) => {
+  const financialStatus = normalizeStatus(payload?.financial_status);
+  const fulfillmentStatus = normalizeStatus(payload?.fulfillment_status);
+  const cancelledAt = payload?.cancelled_at;
+
+  if (cancelledAt) return "cancelled";
+  if (financialStatus === "refunded" || financialStatus === "partially_refunded" || financialStatus === "voided") {
+    return "refunded";
+  }
+  if (fulfillmentStatus === "fulfilled") return "delivered";
+  if (fulfillmentStatus === "partial") return "shipped";
+  if (fulfillmentStatus === "in_progress" || fulfillmentStatus === "open") return "processing";
+  if (financialStatus === "paid" || financialStatus === "authorized" || financialStatus === "partially_paid") {
+    return "confirmed";
+  }
+  return fulfillmentStatus || financialStatus || "processing";
+};
+
 const upsertOrder = async (payload, userId) => {
-  const orderNumber = payload?.order_number || payload?.name || payload?.id;
-  const status = payload?.financial_status || payload?.fulfillment_status || "processing";
+  const normalizedOrderNumber = resolveOrderNumber(payload);
+  if (!normalizedOrderNumber) {
+    throw new Error("Missing order number in Shopify payload.");
+  }
+  const status = resolveOrderStatus(payload);
   const totalAmount = payload?.total_price ? Number(payload.total_price) : null;
   const currency = payload?.currency || payload?.presentment_currency || "EUR";
   const items = parseOrderItems(payload);
-
-  const { error } = await supabaseAdmin.from("orders").insert({
+  const record = {
     user_id: userId,
-    order_number: String(orderNumber || ""),
+    order_number: normalizedOrderNumber,
     status: String(status || ""),
     total_amount: totalAmount,
     currency: String(currency || "EUR"),
     items,
-  });
+  };
 
-  if (error) throw error;
+  const { data: updatedRows, error: updateError } = await supabaseAdmin
+    .from("orders")
+    .update(record)
+    .eq("user_id", userId)
+    .eq("order_number", normalizedOrderNumber)
+    .select("id")
+    .limit(1);
+
+  if (updateError) throw updateError;
+  if (Array.isArray(updatedRows) && updatedRows.length > 0) return;
+
+  const { error: insertError } = await supabaseAdmin.from("orders").insert(record);
+
+  if (insertError) throw insertError;
 };
 
 const server = http.createServer((req, res) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  const topic = req.headers["x-shopify-topic"] || "unknown-topic";
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} (${topic})`);
 
   if (req.method === "GET" && req.url === "/health") {
     res.writeHead(200, { "Content-Type": "text/plain" });
@@ -116,6 +167,18 @@ const server = http.createServer((req, res) => {
 
     try {
       const payload = JSON.parse(rawBody.toString("utf8"));
+      const orderNumber = resolveOrderNumber(payload);
+
+      // For update webhooks, order metadata may not include the same user hints.
+      // If we already have this order in DB, update it directly.
+      const existingOrder = await findOrderByNumber(orderNumber);
+      if (existingOrder?.user_id) {
+        await upsertOrder(payload, existingOrder.user_id);
+        res.writeHead(200);
+        res.end("OK");
+        return;
+      }
+
       const supabaseUserId = extractSupabaseUserId(payload);
       if (supabaseUserId) {
         console.log("Using supabase_user_id attribute:", supabaseUserId);
